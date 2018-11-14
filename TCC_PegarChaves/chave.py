@@ -1,17 +1,14 @@
 from chaveDAO import ChaveDAO
-from datetime import datetime
 import time
 
 class Chave:
 
-    def __init__(self, local):
+    def __init__(self, local, data = None, horario_saida = None, horario_entrega = None, responsavel = None):
         self.local = local
-        self.data = None
-        self.horario_saida = None
-        self.horario_entrega = None
-        self.responsavel = None
-
-# Os métodos com inicio "get" e "set" têm como objetivo dar uma maior segurança aos dados, evitando que haja um acesso externo diretamente nos atributos do objeto
+        self.data = data
+        self.horario_saida = horario_saida
+        self.horario_entrega = horario_entrega
+        self.responsavel = responsavel
 
     def get_local(self):
         return self.local
@@ -43,11 +40,3 @@ class Chave:
     def set_horario_entrega(self, novo):
         self.horario_entrega = novo
 
-# O método data_atual pega data atual do computador
-
-    def data_atual(self):
-        now = datetime.now()
-        dia = now.day
-        mes = now.month
-        ano = now.year
-        return (str(dia) + "/" + str(mes) + "/" + str(ano))
