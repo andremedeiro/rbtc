@@ -1,0 +1,11 @@
+Reservar chaves para os professores por meio de horarios:
+  ao digitar a matricula, se houver uma reserva de chave para o professor, informe que o orifessor pode retirar a chave da sala,
+  senão digite a chave que deseja pegar e então reserve-a para o portador da matricula
+  
+  adequar o projeto ao IF
+  
+  deve haver uma diagramação do projeto, não seráq necessario diagrama de sequencia, apenas classe e caso de uso
+  
+  o responsavel terá tipos, como: limpador; discente e doscentes
+  
+  
