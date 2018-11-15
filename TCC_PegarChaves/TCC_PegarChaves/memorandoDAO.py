@@ -23,9 +23,9 @@ class MemorandoDAO:
         data_de_hoje = time.strptime(self.data(), "%d/%m/%Y")
         data = time.strptime(data, "%d/%m/%Y")
         if data < data_de_hoje:
-            return "Memorando Nâo está Valido"
+            return False
         else:
-            return "Memorando Válido"
+            return True
 
     def data(self):
         now = datetime.now()
@@ -37,3 +37,4 @@ class MemorandoDAO:
     def objeto_memorando(self, tupla):
         from memorando import Memorando
         return Memorando(tupla[0], tupla[1], tupla[2], tupla[3], tupla[4])
+

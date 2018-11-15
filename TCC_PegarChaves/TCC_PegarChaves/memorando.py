@@ -21,6 +21,9 @@ class Memorando:
     def get_encerramento(self):
         return self.encerramento
 
+    def get_situacao(self):
+        return self.situacao
+
     def set_professor(self, novo):
         self.professor = novo
 
@@ -32,6 +35,9 @@ class Memorando:
 
     def set_encerramento(self, novo):
         self.encerramento = novo
+
+    def set_situacao(self, novo):
+        self.situacao = novo
 
     def ajeita_data(self, data):
         return time.strptime(data, "%d/%m/%Y")

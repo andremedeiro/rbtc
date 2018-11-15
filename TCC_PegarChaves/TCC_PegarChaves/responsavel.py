@@ -27,4 +27,3 @@ class Responsavel:
     def set_tipo(self, novo):
         self.tipo = novo
 
-

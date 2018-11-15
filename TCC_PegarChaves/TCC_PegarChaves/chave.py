@@ -10,13 +10,21 @@ class Chave:
         self.horario_entrega = horario_entrega
         self.responsavel = responsavel
 
+    def __str__(self):
+        if self.responsavel == None:
+            return "| "+self.local +" |"
+        elif self.responsavel != None and self.horario_entrega == None:
+            return ("| " + self.local + " | " + self.responsavel + ' | ' + self.data + ' | ' + self.horario_saida)
+        else:
+            return ("| " + self.local + " | " + self.responsavel + ' | ' + self.data + ' | Retirada: ' + self.horario_saida + ' | Desvolvida: ' + self.horario_entrega)
+
     def get_local(self):
         return self.local
 
     def get_data(self):
         return self.data
 
-    def get_responsalvel(self):
+    def get_responsavel(self):
         return self.responsavel
 
     def get_horario_saida(self):
