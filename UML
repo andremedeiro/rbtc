@@ -1,0 +1,114 @@
+CASO DE USO
+
+@startuml
+
+Responsavel as r
+
+Administrador as adm
+
+usecase "Retirar Chave" as retirar
+usecase "Devolver Chave" as devolver
+usecase "Buscar Chave" as buscar
+usecase "Chave no Local" as local
+
+r -- retirar
+r -- devolver
+
+retirar <.. local :<<extends>>
+devolver ..> buscar :<<includes>>
+
+
+
+adm --- (Cadastrar Chave)
+adm --- (Cadastrar Responsavel)
+adm -- (Remover Chave)
+adm --- (Remover Responsavel)
+adm -- (Cadastrar Memorando)
+adm --- (Remover Memorando)
+adm --- (Permitir uso da sala)
+
+
+@enduml
+
+DIAGRAMA DE CLASSES
+
+@startuml
+
+class Responsavel {
+    string nome
+    string matricula
+    string tipo
+    
+    get_nome()
+    get_matricula()
+    get_tipo()
+    
+    set_nome(novo)
+    set_matricula(novo)
+    set_tipo(novo)
+}
+
+class Memorando {
+    string professor
+    list alunos
+    string local
+    string inicio
+    string encerramento
+    string situacao
+    
+    get_professor()
+    get_alunos()
+    get_local()
+    get_inicio()
+    get_encerramento()
+    get_situacao()
+    
+    set_professor(novo)
+    set_alunos(novo)
+    set_local(novo)
+    set_inicio(novo)
+    set_encerramento(novo)
+    set_situacao(novo)
+    
+    ajeita_data(data)
+    
+}
+
+class Sistema {
+    string matricula_administrador
+}
+
+class Chave {
+    string local
+    string data_retirada
+    string horario_saida
+    string responsavel_retirada
+    string data_entrega
+    string horario_entrega
+    string devolvedor
+    
+    get_local()
+    get_data_retirada()
+    get_horario_saida()
+    get_responsavel_retirada()
+    get_data_entrega()
+    get_horario_entrega()
+    get_devolvedor()
+
+    set_local(novo)
+    set_data_retirada(novo)
+    set_horario_saida(novo)
+    set_responsavel_retirada(novo)
+    set_data_entrega(novo)
+    set_horario_entrega(novo)
+    set_devolvedor(novo)
+    
+
+}
+
+
+Chave --> Sistema
+Responsavel --> Sistema
+Memorando --> Sistema
+
+@enduml
