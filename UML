@@ -34,18 +34,62 @@ DIAGRAMA DE CLASSES
 
 @startuml
 
-class Responsavel {
+
+class Sistema {
+    string matricula_administrador
+    conexao
+    cursor
+    
+    cadastrar_chave(local)
+    cadastrar_usuario(nome, matricula, tipo)
+    cadastrar_memorando(professor, lista_alunos, local, inicio, encerramento)
+    
+    retirar_chave(local, usuario, data_retirada, hora_retirada)
+    devolver_chave(local, usuario, data_entrega, hora_entrega)
+}
+
+
+class Usuario {
     string nome
     string matricula
     string tipo
     
-    get_nome()
-    get_matricula()
-    get_tipo()
+    inserir_usuario(nome, matricula, tipo)
+}
+
+class UsuarioDAO {
+    conexao
+    cursor
+
     
-    set_nome(novo)
-    set_matricula(novo)
-    set_tipo(novo)
+    retorna_objeto(tupla)
+
+}
+
+
+class Chave {
+    string local
+    string data_retirada
+    string horario_saida
+    string responsavel_retirada
+    string data_entrega
+    string horario_entrega
+    string devolvedor
+ 
+    inserir_chave(local)
+    retirar_chave(local, usuario, data_retirada, hora_retirada)
+    devolver_chave(local, usuario, data_entrega, hora_entrega)
+}
+
+
+class ChaveDAO {
+    conexao
+    cursor
+    
+    
+    insere)chave(local)
+    chaves_em_circulacao()
+    retorna_objeto(tupla)
 }
 
 class Memorando {
@@ -56,59 +100,67 @@ class Memorando {
     string encerramento
     string situacao
     
-    get_professor()
-    get_alunos()
-    get_local()
-    get_inicio()
-    get_encerramento()
-    get_situacao()
-    
-    set_professor(novo)
-    set_alunos(novo)
-    set_local(novo)
-    set_inicio(novo)
-    set_encerramento(novo)
-    set_situacao(novo)
-    
+    inserir_memorando(professor, aluno, local, inicio, encerramento, situacao)
     ajeita_data(data)
     
 }
 
-class Sistema {
-    string matricula_administrador
-}
-
-class Chave {
-    string local
-    string data_retirada
-    string horario_saida
-    string responsavel_retirada
-    string data_entrega
-    string horario_entrega
-    string devolvedor
+class MemorandoDAO {
+    conexao
+    cursor
     
-    get_local()
-    get_data_retirada()
-    get_horario_saida()
-    get_responsavel_retirada()
-    get_data_entrega()
-    get_horario_entrega()
-    get_devolvedor()
-
-    set_local(novo)
-    set_data_retirada(novo)
-    set_horario_saida(novo)
-    set_responsavel_retirada(novo)
-    set_data_entrega(novo)
-    set_horario_entrega(novo)
-    set_devolvedor(novo)
-    
+    ajeitar_situacoes()
+    insere_memorando(professor, aluno, local, inicio, encerramento, situacao)
+    busca_autorizacao(nome_usuario, local)
+    retorna_objeto(tupla)
 
 }
 
+Chave ---> Sistema
+Usuario ---> Sistema
+Memorando ---> Sistema
 
-Chave --> Sistema
-Responsavel --> Sistema
-Memorando --> Sistema
+ChaveDAO ---> Chave
+UsuarioDAO ---> Usuario
+MemorandoDAO ---> Memorando
 
 @enduml
+
+
+DIAGRAMAS DE SEQUENCIAS
+
+DEVOLVER CHAVE
+
+@startuml
+
+participant Usuario as usu
+participant Sistema as sis
+participant ChaveDAO as dao
+
+[-> usu:Devolver Chave
+usu -> sis : devolver_chave()
+sis -> dao : busca_chave()
+dao --> sis : Retorna Chave
+sis --> usu : Autoriza Devolução
+
+
+@enduml
+
+RETIRAR CHAVE
+
+@startuml
+
+participant Usuario as usu
+participant Sistema as sis
+participant ChaveDAO as dao
+
+[-> usu: Retirar Chave
+usu -> sis : retirar_chave()
+sis -> dao : busca_chave()
+dao --> sis : Retorna Chave
+sis -> sis : Analsa_usuario()
+sis --> usu : Autoriza Devolução
+
+
+@enduml
+
