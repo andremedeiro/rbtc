@@ -158,9 +158,41 @@ participant ChaveDAO as dao
 usu -> sis : retirar_chave()
 sis -> dao : busca_chave()
 dao --> sis : Retorna Chave
-sis -> sis : Analsa_usuario()
+sis -> sis : Analisa_usuario()
 sis --> usu : Autoriza Devolução
 
 
 @enduml
 
+CADASTRAR USUARIO
+
+@startuml
+
+participant Usuário as usu
+participant Sistema as sis
+participant UsuarioDAO as dao
+
+[-> usu: Cadastrar Usuario
+usu -> sis: Cadastrar_Usuario()
+sis -> dao: Buscar_Usuario()
+dao --> sis: Resultado da busca
+sis --> usu: Usuario Cadastrado
+
+@enduml
+
+
+CADASTRAR CHAVE
+
+@startuml
+
+participant Usuário as usu
+participant Sistema as sis
+participant ChaveDAO as dao
+
+[-> usu: Cadastrar Chave
+usu -> sis: Cadastrar_Chave()
+sis -> dao: Buscar_Chave()
+dao --> sis: Resultado da busca
+sis --> usu: Chave Cadastrada
+
+@enduml
