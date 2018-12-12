@@ -40,12 +40,22 @@ class Sistema {
     conexao
     cursor
     
+    matricula_administrador()
     cadastrar_chave(local)
     cadastrar_usuario(nome, matricula, tipo)
     cadastrar_memorando(professor, lista_alunos, local, inicio, encerramento)
-    
     retirar_chave(local, usuario, data_retirada, hora_retirada)
     devolver_chave(local, usuario, data_entrega, hora_entrega)
+    buscar_usuario(matricula)
+    buscar_chave(local)
+    busca_autorizacao(matricula, local)
+    remover_chave(local)
+    remover_usuario(matricula)
+    listar_chaves()
+    listar_usuarios()
+    chaves_em_circulacao()
+    menu_usuario(usuario)
+    menu_administrador()
 }
 
 
@@ -55,13 +65,19 @@ class Usuario {
     string tipo
     
     inserir_usuario(nome, matricula, tipo)
+    remover_usuario(matricula)
+    buscar_usuario(matricula)
+    listar_usuarios()
 }
 
 class UsuarioDAO {
     conexao
     cursor
 
-    
+    criar_tabela()
+    insere_usuario(nome, matricula, tipo)
+    remove_usuario(matricula)
+    listar_usuarios()
     retorna_objeto(tupla)
 
 }
@@ -79,6 +95,9 @@ class Chave {
     inserir_chave(local)
     retirar_chave(local, usuario, data_retirada, hora_retirada)
     devolver_chave(local, usuario, data_entrega, hora_entrega)
+    listar_chaves()
+    chaves_em_circulacao()
+    remover_chave(local)
 }
 
 
@@ -86,8 +105,12 @@ class ChaveDAO {
     conexao
     cursor
     
-    
-    insere)chave(local)
+    criar_tabela()
+    insere_chave(local)
+    retira_chave(local, usuario, data_retirada, hora_retirada)
+    devolve_chave(local, usuario, data_entrega, hora_entraga)
+    listar_chaves()
+    remover_chave(local)
     chaves_em_circulacao()
     retorna_objeto(tupla)
 }
@@ -100,7 +123,11 @@ class Memorando {
     string encerramento
     string situacao
     
-    inserir_memorando(professor, aluno, local, inicio, encerramento, situacao)
+    inserir_memorando(professor, aluno, local, inicio,
+    encerramento, situacao)
+    busca_autorizacao(matricula, local)
+    listar_memorando()
+    memorandos_validos()
     ajeita_data(data)
     
 }
@@ -109,20 +136,24 @@ class MemorandoDAO {
     conexao
     cursor
     
+    criar_tabela()
     ajeitar_situacoes()
-    insere_memorando(professor, aluno, local, inicio, encerramento, situacao)
-    busca_autorizacao(nome_usuario, local)
+    insere_memorando(professor, aluno, local, inicio,
+    encerramento, situacao)
+    busca_autorizacao(matricula, local)
+    listar_memorando()
+    memorando_validos()
     retorna_objeto(tupla)
 
 }
 
-Chave ---> Sistema
-Usuario ---> Sistema
-Memorando ---> Sistema
+Chave --> Sistema
+Usuario --> Sistema
+Memorando --> Sistema
 
-ChaveDAO ---> Chave
-UsuarioDAO ---> Usuario
-MemorandoDAO ---> Memorando
+ChaveDAO --> Chave
+UsuarioDAO --> Usuario
+MemorandoDAO --> Memorando
 
 @enduml
 
