@@ -190,7 +190,7 @@ usu -> sis : retirar_chave()
 sis -> dao : busca_chave()
 dao --> sis : Retorna Chave
 sis -> sis : Analisa_usuario()
-sis --> usu : Autoriza Devolução
+sis --> usu : Autoriza Retirada
 
 
 @enduml
