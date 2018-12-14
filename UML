@@ -32,15 +32,17 @@ adm --- (Permitir uso da sala)
 
 DIAGRAMA DE CLASSES
 
-@startuml
-
-
 class Sistema {
     string matricula_administrador
-    conexao
-    cursor
-    
-    matricula_administrador()
+    string senha
+
+    gerar_matricula()
+    criar_tabela()
+    inserir()
+    alterar_senha()
+    alterar_matricula_admin()
+    hora_atual()
+    data_atual()
     cadastrar_chave(local)
     cadastrar_usuario(nome, matricula, tipo)
     cadastrar_memorando(professor, lista_alunos, local, inicio, encerramento)
@@ -48,11 +50,13 @@ class Sistema {
     devolver_chave(local, usuario, data_entrega, hora_entrega)
     buscar_usuario(matricula)
     buscar_chave(local)
+    buscar_chave_circulacao(local)
     busca_autorizacao(matricula, local)
     remover_chave(local)
     remover_usuario(matricula)
     listar_chaves()
     listar_usuarios()
+    memorandos_validos()
     chaves_em_circulacao()
     menu_usuario(usuario)
     menu_administrador()
@@ -64,20 +68,15 @@ class Usuario {
     string matricula
     string tipo
     
-    inserir_usuario(nome, matricula, tipo)
-    remover_usuario(matricula)
-    buscar_usuario(matricula)
-    listar_usuarios()
 }
 
 class UsuarioDAO {
-    conexao
-    cursor
 
     criar_tabela()
     insere_usuario(nome, matricula, tipo)
     remove_usuario(matricula)
     listar_usuarios()
+    buscar_usuario(matricula)
     retorna_objeto(tupla)
 
 }
@@ -87,29 +86,23 @@ class Chave {
     string local
     string data_retirada
     string horario_saida
-    string responsavel_retirada
+    string usuario_retirada
     string data_entrega
     string horario_entrega
-    string devolvedor
+    string usuario_entrega
  
-    inserir_chave(local)
-    retirar_chave(local, usuario, data_retirada, hora_retirada)
-    devolver_chave(local, usuario, data_entrega, hora_entrega)
-    listar_chaves()
-    chaves_em_circulacao()
-    remover_chave(local)
 }
 
 
 class ChaveDAO {
-    conexao
-    cursor
     
     criar_tabela()
     insere_chave(local)
     retira_chave(local, usuario, data_retirada, hora_retirada)
     devolve_chave(local, usuario, data_entrega, hora_entraga)
     listar_chaves()
+    buscar_chave(local)
+    buscar_chave_circulacao(local)
     remover_chave(local)
     chaves_em_circulacao()
     retorna_objeto(tupla)
@@ -117,29 +110,22 @@ class ChaveDAO {
 
 class Memorando {
     string professor
-    list alunos
+    list<Usuario> alunos
     string local
     string inicio
     string encerramento
     string situacao
     
-    inserir_memorando(professor, aluno, local, inicio,
-    encerramento, situacao)
-    busca_autorizacao(matricula, local)
-    listar_memorando()
-    memorandos_validos()
     ajeita_data(data)
     
 }
 
 class MemorandoDAO {
-    conexao
-    cursor
     
     criar_tabela()
     ajeitar_situacoes()
     insere_memorando(professor, aluno, local, inicio,
-    encerramento, situacao)
+    encerramento)
     busca_autorizacao(matricula, local)
     listar_memorando()
     memorando_validos()
@@ -147,16 +133,20 @@ class MemorandoDAO {
 
 }
 
-Chave --> Sistema
-Usuario --> Sistema
-Memorando --> Sistema
 
-ChaveDAO --> Chave
-UsuarioDAO --> Usuario
-MemorandoDAO --> Memorando
+Chave "N"-up->"1" Sistema
+Usuario "N"-up->"1" Sistema
+Memorando "N"-up->"1" Sistema
+
+ChaveDAO "1"-up->"1" Sistema
+UsuarioDAO "1"-up->"1" Sistema
+MemorandoDAO "1"-up->"1" Sistema
+
+ChaveDAO "1"-down-"N" Chave
+UsuarioDAO "1"-down-"N" Usuario
+MemorandoDAO "1"-down-"N" Memorando
 
 @enduml
-
 
 DIAGRAMAS DE SEQUENCIAS
 
