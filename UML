@@ -35,6 +35,7 @@ DIAGRAMA DE CLASSES
 class Sistema {
     string matricula_administrador
     string senha
+    interface
 
     gerar_matricula()
     criar_tabela()
@@ -43,6 +44,9 @@ class Sistema {
     alterar_matricula_admin()
     hora_atual()
     data_atual()
+    erro(texto)
+    aviso(texto)
+    listar(texto, lista)
     cadastrar_chave(local)
     cadastrar_usuario(nome, matricula, tipo)
     cadastrar_memorando(professor, lista_alunos, local, inicio, encerramento)
@@ -58,10 +62,27 @@ class Sistema {
     listar_usuarios()
     memorandos_validos()
     chaves_em_circulacao()
-    menu_usuario(usuario)
-    menu_administrador()
 }
 
+interface Interface{
+    principal
+    
+    tela_principal()
+    menu_principal()
+    menu_usuario(usuario)
+    menu_administrador(senha)
+    limpar_tela()
+    encerrar()
+    retirar_chave(usuario)
+    devolver_chave(usuario)
+    cadastrar_usuario()
+    cadastrar_chave()
+    cadastrar_memorando()
+    remover_usuario()
+    remover_chave()
+    alterar_senha()
+    alterar_matricula()
+}
 
 class Usuario {
     string nome
@@ -98,8 +119,10 @@ class ChaveDAO {
     
     criar_tabela()
     insere_chave(local)
-    retira_chave(local, usuario, data_retirada, hora_retirada)
-    devolve_chave(local, usuario, data_entrega, hora_entraga)
+    data_atual()
+    hota_atual()
+    retira_chave(local, usuario)
+    devolve_chave(local, usuario)
     listar_chaves()
     buscar_chave(local)
     buscar_chave_circulacao(local)
@@ -110,13 +133,11 @@ class ChaveDAO {
 
 class Memorando {
     string professor
-    list<Usuario> alunos
+    string aluno
     string local
     string inicio
     string encerramento
     string situacao
-    
-    ajeita_data(data)
     
 }
 
@@ -124,27 +145,26 @@ class MemorandoDAO {
     
     criar_tabela()
     ajeitar_situacoes()
-    insere_memorando(professor, aluno, local, inicio,
-    encerramento)
+    insere_memorando(professor, aluno, 
+    local, inicio, encerramento)
     busca_autorizacao(matricula, local)
     listar_memorando()
-    memorando_validos()
+    remover(matricula)
     retorna_objeto(tupla)
 
 }
 
-
-Chave "N"-up->"1" Sistema
-Usuario "N"-up->"1" Sistema
-Memorando "N"-up->"1" Sistema
-
 ChaveDAO "1"-up->"1" Sistema
 UsuarioDAO "1"-up->"1" Sistema
 MemorandoDAO "1"-up->"1" Sistema
+Sistema "1"-up->"1" Interface
 
 ChaveDAO "1"-down-"N" Chave
 UsuarioDAO "1"-down-"N" Usuario
 MemorandoDAO "1"-down-"N" Memorando
+
+
+
 
 @enduml
 
