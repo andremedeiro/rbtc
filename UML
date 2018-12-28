@@ -182,6 +182,7 @@ participant ChaveDAO as dao
 usu -> sis : devolver_chave()
 sis -> dao : busca_chave()
 dao --> sis : Retorna Chave
+sis -> dao: devolve_chave()
 sis --> usu : Autoriza Devolução
 
 
@@ -199,7 +200,8 @@ participant ChaveDAO as dao
 usu -> sis : retirar_chave()
 sis -> dao : busca_chave()
 dao --> sis : Retorna Chave
-sis -> sis : Analisa_usuario()
+sis -> sis : busca_autorizacao()
+sis -> dao: retira_chave()
 sis --> usu : Autoriza Retirada
 
 
@@ -214,9 +216,10 @@ participant Sistema as sis
 participant UsuarioDAO as dao
 
 [-> usu: Cadastrar Usuario
-usu -> sis: Cadastrar_Usuario()
-sis -> dao: Buscar_Usuario()
+usu -> sis: cadastrar_Usuario()
+sis -> dao: buscar_Usuario()
 dao --> sis: Resultado da busca
+sis -> dao: insere_usuario()
 sis --> usu: Usuario Cadastrado
 
 @enduml
@@ -231,9 +234,30 @@ participant Sistema as sis
 participant ChaveDAO as dao
 
 [-> usu: Cadastrar Chave
-usu -> sis: Cadastrar_Chave()
-sis -> dao: Buscar_Chave()
+usu -> sis: cadastrar_Chave()
+sis -> dao: buscar_Chave()
 dao --> sis: Resultado da busca
+sis -> dao: insere_chave()
 sis --> usu: Chave Cadastrada
+
+@enduml
+
+CADASTRAR MEMORANDO
+
+@startuml
+
+participant Usuario as usu
+participant Sistema as sis 
+participant MemorandoDAO as dao
+
+
+[-> usu: Cadastrar Usuario
+usu -> sis: cadastrar_memorando()
+sis -> dao: buscar_chave()
+dao --> sis: Resultado da busca
+sis -> dao: buscar_usuario()
+dao --> sis: Resultado da busca
+sis -> dao: insere_memorando()
+sis --> usu: Memorando Cadastrado
 
 @enduml
